@@ -643,6 +643,25 @@ export function createMediaSourceProcess({ path, videoStreamIndex, audioStreamIn
   return execa(getFfmpegPath(), args, { encoding: 'buffer', buffer: false, stderr: enableLog ? 'inherit' : 'pipe' });
 }
 
+export async function cropVideo({ inPath, outPath, width, height, x, y }: {
+  inPath: string,
+  outPath: string,
+  width: number,
+  height: number,
+  x: number,
+  y: number,
+}) {
+  const args = [
+    '-i', inPath,
+    '-filter:v', `crop=${width}:${height}:${x}:${y}`,
+    '-c:a', 'copy',
+    '-y', outPath,
+  ];
+
+  await runFfmpegProcess(args);
+  return args;
+}
+
 export async function downloadMediaUrl(url: string, outPath: string) {
   // User agent taken from https://techblog.willshouse.com/2012/01/03/most-common-user-agents/
   const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36';

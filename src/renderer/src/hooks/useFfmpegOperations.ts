@@ -5,7 +5,7 @@ import pMap from 'p-map';
 import invariant from 'tiny-invariant';
 
 import { getSuffixedOutPath, transferTimestamps, getOutFileExtension, getOutDir, deleteDispositionValue, getHtml5ifiedPath, unlinkWithRetry, getFrameDuration, isMac } from '../util';
-import { isCuttingStart, isCuttingEnd, runFfmpegWithProgress, getFfCommandLine, getDuration, createChaptersFromSegments, readFileMeta, getExperimentalArgs, getVideoTimescaleArgs, logStdoutStderr, runFfmpegConcat, RefuseOverwriteError, runFfmpeg } from '../ffmpeg';
+import { isCuttingStart, isCuttingEnd, runFfmpegWithProgress, getFfCommandLine, getDuration, createChaptersFromSegments, readFileMeta, getExperimentalArgs, getVideoTimescaleArgs, logStdoutStderr, runFfmpegConcat, RefuseOverwriteError, runFfmpeg, cropVideo as cropVideoMain } from '../ffmpeg';
 import { getMapStreamsArgs, getStreamIdsToCopy } from '../util/streams';
 import { getSmartCutParams } from '../smartcut';
 import { getGuaranteedSegments, isDurationValid } from '../segments';
@@ -833,6 +833,18 @@ function useFfmpegOperations({ filePath, treatInputFileModifiedTimeAsStart, trea
     return outPath;
   }, [appendFfmpegCommandLog, filePath, treatInputFileModifiedTimeAsStart, treatOutputFileModifiedTimeAsStart]);
 
+  const cropVideo = useCallback(async ({ inPath, outPath, width, height, x, y }: {
+    inPath: string,
+    outPath: string,
+    width: number,
+    height: number,
+    x: number,
+    y: number,
+  }) => {
+    const ffmpegArgs = await cropVideoMain({ inPath, outPath, width, height, x, y });
+    appendFfmpegCommandLog(ffmpegArgs);
+  }, [appendFfmpegCommandLog]);
+
   function getPreferredCodecFormat(stream: LiteFFprobeStream) {
     const map = {
       mp3: { format: 'mp3', ext: 'mp3' },
@@ -977,7 +989,7 @@ function useFfmpegOperations({ filePath, treatInputFileModifiedTimeAsStart, trea
   }, [extractAttachmentStreams, extractNonAttachmentStreams, filePath]);
 
   return {
-    cutMultiple, concatFiles, html5ify, html5ifyDummy, fixInvalidDuration, concatCutSegments, extractStreams, tryDeleteFiles,
+    cutMultiple, concatFiles, html5ify, html5ifyDummy, fixInvalidDuration, concatCutSegments, extractStreams, tryDeleteFiles, cropVideo,
   };
 }
 
