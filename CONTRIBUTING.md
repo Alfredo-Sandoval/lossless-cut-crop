@@ -25,7 +25,7 @@ yarn download-ffmpeg-linux-x64
 yarn download-ffmpeg-win32-x64
 ```
 
-For Windows, you may have to install [7z](https://www.7-zip.org/download.html), and then put the 7z folder in your `PATH`.
+On Windows you can instead run `install-deps.bat` which installs all Node dependencies and downloads FFmpeg. This script requires [7-Zip](https://www.7-zip.org/download.html) to be installed and added to your `PATH`.
 
 ### Running
 
