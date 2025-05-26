@@ -39,6 +39,19 @@ export async function runStartupCheck({ customFfPath }: { customFfPath: string |
         });
         return;
       }
+
+      const msg = err.message ?? '';
+      if (
+        (!customFfPath && 'code' in err && err.code === 'ENOENT')
+        || msg.includes('is not recognized as an internal or external command')
+      ) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Fatal: ffmpeg.exe missing',
+          text: `ffmpeg.exe could not be found or executed. Verify that LosslessCut is fully extracted and that your anti-virus software isn't blocking it. See the installation notes: https://github.com/mifi/lossless-cut/blob/master/installation.md#installation-troubleshooting`,
+        });
+        return;
+      }
     }
 
     handleError('Fatal: ffmpeg non-functional', err);
