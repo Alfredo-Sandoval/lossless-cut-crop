@@ -12,6 +12,13 @@ There is no installer. The app is just a compressed file that you download from 
 - MacOS: Mount the `dmg` and drag the app into your `Applications` folder.
 - Linux: Y'all know what to do ;)
 
+## Installation troubleshooting
+
+If LosslessCut fails to start and complains that `ffmpeg.exe` cannot be found or executed,
+make sure the app is fully extracted from the downloaded archive. Some anti-virus
+software may block `ffmpeg.exe`. Try whitelisting it or temporarily disabling the
+anti-virus before launching the app.
+
 ## Portable app?
 
 LosslessCut is **not** a portable app. If you install it from the Mac App Store or Microsoft Store, it is somewhat portable because it will be containerized by the operating system, so that when you uninstall the app there will most likely not be many traces of it left. You *can* however customise where settings are stored, see below.
