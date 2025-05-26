@@ -1,8 +1,13 @@
 @echo off
-setlocal
+REM ---- build-exe.bat ----
+setlocal enabledelayedexpansion
 
-:: Build the Windows executable
+REM ➊ Jump to the directory that contains THIS .bat
+pushd "%~dp0"
 
-yarn pack-win
+REM ➋ Run your project’s build script
+yarn pack-win      && echo Build succeeded. || echo Build failed.
 
+REM ➌ Restore the caller’s original directory
+popd
 endlocal
