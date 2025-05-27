@@ -3,9 +3,9 @@
 ## There is no installer
 
 There is no installer. The app is just a compressed file that you download from [GitHub](https://github.com/mifi/lossless-cut/releases) and extract. Then you run the executable contained within.
-- Windows: Download the `.7z` file and extract it using [7zip](https://www.7-zip.org/download.html).
+- Windows: Download the `.7z` file and extract it using [7‑Zip](https://www.7-zip.org/download.html).
   **Important:** Extract the entire folder to disk before running `LosslessCut.exe`.
-  Do not launch the app directly from PeaZip, 7-Zip File Manager or any other
+  Do not launch the app directly from PeaZip, 7‑Zip File Manager or any other
   archive viewer. Running it from a temporary extraction location can lead to
   errors such as `Fatal: ffmpeg non-functional` or `ffmpeg.exe is not recognized
   as an internal or external command`.
