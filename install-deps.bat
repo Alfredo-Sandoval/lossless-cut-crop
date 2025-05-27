@@ -20,9 +20,25 @@ if errorlevel 1 (
 REM Check for 7-Zip which is needed to extract FFmpeg
 where 7z.exe >nul 2>nul
 if errorlevel 1 (
+  REM Try a few common install locations
+  for %%X in (
+    "C:\Program Files\7-Zip\7z.exe"
+    "C:\Program Files (x86)\7-Zip\7z.exe"
+    "%ProgramData%\chocolatey\tools\7z.exe"
+    "C:\Program Files\NVIDIA Corporation\NVIDIA app\7z.exe"
+  ) do (
+    if exist "%%~X" (
+      echo Found 7-Zip at "%%~dpX"
+      set "PATH=%%~dpX;%PATH%"
+      goto :7zip_ok
+    )
+  )
+
   echo 7-Zip is required to extract FFmpeg. Install it from https://www.7-zip.org/ and make sure 7z.exe is in PATH.
   exit /b 1
 )
+
+:7zip_ok
 
 echo Installing Node dependencies...
 yarn install
